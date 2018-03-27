@@ -11,13 +11,20 @@
               <router-link to="https://youpin.mi.com/" target="_blank">有品</router-link><span class="sep">|</span>
               <router-link to="//www.mi.com/index.html" target="_blank">Select Region</router-link>
           </div>
-          <div class="topbar-cart" :class="{'active':isActive}" @mouseover="show" @mouseout="show">
+          <div class="topbar-cart" :class="{'active':isActive}" @mouseover="show" @mouseout="hide">
               <router-link to="//static.mi.com/cart/" class="cart-mini">
                 <i class="iconfont icon-gouwuchekong"></i>购物车<span class="cart-mini-num">（0）</span>
               </router-link>
-            <div class="cart-menu" :class="{'active':isActive}">
-                <div class="loading">购物车中还没有商品，赶紧选购吧！</div>
-            </div>
+              <transition
+                name="custom"
+                enter-active-class="animated headShake"
+                leave-active-class="animated jello"
+              >
+                   <div class="cart-menu" v-if="isActive">
+                      <div class="loading" v-if="!isActive"><div class="loader"></div></div>
+                      <div class="loading" v-else>购物车中还没有商品，赶紧选购吧！</div>
+                  </div>
+              </transition>
         </div>
         <div class="topbar-info">
             <router-link class="link" target="_blank" to="//order.mi.com/site/login?redirectUrl=https://www.mi.com/?client_id=180100041086&amp;masid=17489.0001">登录</router-link><span class="sep">|</span>
@@ -42,6 +49,9 @@ export default {
   },
   methods: {
     show() {
+      this.isActive = !this.isActive;
+    },
+    hide() {
       this.isActive = !this.isActive;
     }
   }
@@ -106,7 +116,7 @@ header {
       margin-left: 15px;
       .cart-mini {
         position: relative;
-        z-index: 32;
+        z-index: 1;
         display: block;
         height: 40px;
         line-height: 40px;
@@ -142,6 +152,55 @@ header {
           margin: 5px 20px 20px;
           text-align: center;
           padding: 20px 0;
+          .loader {
+            position: relative;
+            margin: 0 auto;
+            width: 4px;
+            height: 20px;
+            background: #ff6700;
+            overflow: visible;
+            -webkit-animation-delay: 0s;
+            animation-delay: 0s;
+            -webkit-transform: scale(1, 1);
+            -ms-transform: scale(1, 1);
+            transform: scale(1, 1);
+          }
+          .loader,
+          .loader:before,
+          .loader:after {
+            -webkit-transform-origin: 50% 50%;
+            -ms-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+            -webkit-animation: loader 0.3s linear infinite alternate-reverse;
+            -ms-animation: loader 0.3s linear infinite alternate-reverse;
+            animation: loader 0.3s linear infinite alternate-reverse;
+          }
+          .loader:before,
+          .loader:after {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 4px;
+            height: 20px;
+            content: "";
+            background: #ff6700;
+          }
+          .loader:before {
+            margin: -10px 0 0 -10px;
+            -webkit-animation-delay: 0.25s;
+            animation-delay: 0.25s;
+            -webkit-transform: scale(1, 0.3);
+            -ms-transform: scale(1, 0.3);
+            transform: scale(1, 0.3);
+          }
+          .loader:after {
+            margin: -10px 0 0 6px;
+            -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+            -webkit-transform: scale(1, 0.5);
+            -ms-transform: scale(1, 0.5);
+            transform: scale(1, 0.5);
+          }
         }
       }
     }
@@ -179,6 +238,32 @@ header {
         padding: 0 10px;
       }
     }
+  }
+}
+@-webkit-keyframes loader {
+  0% {
+    -webkit-transform: scale(1, 0.5);
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    opacity: 1;
+    filter: alpha(opacity=100);
+  }
+}
+@keyframes loader {
+  0% {
+    -webkit-transform: scale(1, 0.5);
+    transform: scale(1, 0.5);
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    opacity: 1;
+    filter: alpha(opacity=100);
   }
 }
 </style>
