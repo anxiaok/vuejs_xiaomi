@@ -8,7 +8,7 @@
 # 安装依赖
 npm install
 
-# 服务器默认端口是8080端口
+# 服务默认端口是8080端口
 npm run dev
 
 # build for production with minification
