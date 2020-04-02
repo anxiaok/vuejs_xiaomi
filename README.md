@@ -8,7 +8,7 @@
 # 安装依赖
 npm install
 
-# serve with hot reload at localhost:8080
+# 服务默认端口是8080端口
 npm run dev
 
 # build for production with minification
