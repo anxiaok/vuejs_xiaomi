@@ -11,7 +11,7 @@ npm install
 # 服务默认端口是8080端口
 npm run dev
 
-# build 代码
+# build 代码build
 npm run build
 
 # build for production and view the bundle analyzer report
